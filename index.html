@@ -1,0 +1,95 @@
+<html>
+  <head>
+    <script>
+    // Setup Polymer options
+    window.Polymer = {
+      dom: 'shadow',
+    };
+    </script>
+    <link rel="import" href="bower_components/paper-input/paper-input-container.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/iron-input/iron-input.html">
+  </head>
+  <body>
+
+    <dom-module id="my-app">
+
+      <template>
+
+        <paper-input-container>
+          <label slot="label">Your name</label>
+          <iron-input slot="input">
+            <input id="username" type="text" value="{{_username::input}}">
+          </iron-input>
+        </paper-input-container>
+
+        <paper-input-container>
+          <label slot="label">Your password</label>
+          <iron-input slot="input">
+            <input id="password" type="password" value="{{_password::input}}">
+          </iron-input>
+        </paper-input-container>
+
+        <paper-button on-tap="_handleLoginTap" raised>Login</paper-button>
+
+        <div>username: [[_username]]</div>
+        <div>password: [[_password]]</div>
+
+      </template>
+      <script>
+        Polymer({
+          is: 'my-app',
+
+          properties: {
+            _username: String,
+            _password: String,
+          },
+
+          observers: [
+            '_copyToRoot(_password)',
+            '_copyToRoot(_username)',
+          ],
+
+          ready() {
+            // copy values entered by password manager
+            ['username', 'password'].forEach(
+              (id) => {
+                const element = document.querySelector(`#${id}`);
+
+                console.log('MAXMAXMAX: Password manager entered:', id, element.value);
+                this.set(`_${id}`, element.value);
+
+                element.addEventListener('input', (event) => {
+                  const {value} = event.currentTarget;
+                  console.log('MAXMAXMAX: Password manager entered:', id, value);
+                  this.set(`_${id}`, value);
+                });
+            });
+          },
+
+          _copyToRoot() {
+            ['username', 'password'].forEach((id) => {
+              const value = this.get(`_${id}`);
+
+              console.log('MAXMAXMAX: User entered:', id, value);
+              document.querySelector(`#${id}`).value = value
+            });
+          },
+
+          _handleLoginTap(event) {
+            window.location.href = "http://localhost:8081/maxwashere";
+          },
+
+        });
+      </script>
+
+    </dom-module>
+
+    <my-app></my-app>
+
+    <div>Native</div>
+    <input id="username" type="text" autocomplete="username">
+    <input id="password" type="password" autocomplete="password">
+
+  </body>
+</html>
