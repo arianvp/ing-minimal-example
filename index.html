@@ -19,14 +19,14 @@
         <paper-input-container>
           <label slot="label">Your name</label>
           <iron-input slot="input">
-            <input id="username" type="text" value="{{_username::input}}">
+            <input name="username" id="username" type="text" value="{{_username::input}}">
           </iron-input>
         </paper-input-container>
 
         <paper-input-container>
           <label slot="label">Your password</label>
           <iron-input slot="input">
-            <input id="password" type="password" value="{{_password::input}}">
+            <input name="password" id="password" type="password" value="{{_password::input}}">
           </iron-input>
         </paper-input-container>
 
@@ -87,9 +87,10 @@
 
     <my-app></my-app>
 
-    <div>Native</div>
+    <!--<div>Native</div>
     <input id="username" type="text" autocomplete="username">
     <input id="password" type="password" autocomplete="password">
+    -->
 
   </body>
 </html>
